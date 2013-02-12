@@ -1,10 +1,9 @@
 ﻿using System;
-using FlitBit.Emit;
-using FlitBit.IoC;
-using FlitBit.ObjectIdentity.Tests.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FlitBit.Core;
+using FlitBit.Emit;
+using FlitBit.ObjectIdentity.Tests.Models;
 using FlitBit.Wireup;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlitBit.ObjectIdentity.Tests
 {	
@@ -25,7 +24,7 @@ namespace FlitBit.ObjectIdentity.Tests
 			RuntimeAssemblies.WriteDynamicAssemblyOnExit = true;
 
 			var rand = new Random();
-			var factory = FactoryFactory.Instance;
+			var factory = FactoryProvider.Factory;
 			var ik = factory.CreateInstance<IdentityKey<My, string>>();
 			
 			Assert.IsTrue(ik.HasKey);
@@ -48,7 +47,7 @@ namespace FlitBit.ObjectIdentity.Tests
 			RuntimeAssemblies.WriteDynamicAssemblyOnExit = true;
 
 			var rand = new Random();
-			var factory = FactoryFactory.Instance;
+			var factory = FactoryProvider.Factory;
 			var ik = factory.CreateInstance<IdentityKey<IMy, string>>();
 			
 			Assert.IsTrue(ik.HasKey);
@@ -60,7 +59,7 @@ namespace FlitBit.ObjectIdentity.Tests
 			{
 				var r = rand.Next();
 				var name = String.Concat("This is the ", r, " name");
-				var my = Create.New<IMy>();
+				var my = factory.CreateInstance<IMy>();
 				my.Name = name;
 				my.Tag = Convert.ToString(r);
 				Assert.AreEqual(Convert.ToString(r), ik.Key(my));
@@ -74,7 +73,7 @@ namespace FlitBit.ObjectIdentity.Tests
 			RuntimeAssemblies.WriteDynamicAssemblyOnExit = true;
 
 			var rand = new Random();
-			var factory = FactoryFactory.Instance;
+			var factory = FactoryProvider.Factory;
 			var ik = factory.CreateInstance<IdentityKey<IDerived, string>>();
 
 			Assert.IsTrue(ik.HasKey);
@@ -86,7 +85,7 @@ namespace FlitBit.ObjectIdentity.Tests
 			{
 				var r = rand.Next();
 				var name = String.Concat("This is the ", r, " name");
-				var my = Create.New<IDerived>();
+				var my = factory.CreateInstance<IDerived>();
 				my.Name = name;
 				my.Tag = Convert.ToString(r);
 				my.Description = String.Concat("Derived: ", name);
@@ -102,7 +101,7 @@ namespace FlitBit.ObjectIdentity.Tests
 			RuntimeAssemblies.WriteDynamicAssemblyOnExit = true;
 
 			var rand = new Random();
-			var factory = FactoryFactory.Instance;
+			var factory = FactoryProvider.Factory;
 			var ik = factory.CreateInstance<IdentityKey<NoKey>>();
 						
 			Assert.IsFalse(ik.HasKey);

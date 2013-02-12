@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Phillip Clark</authors>
+    <owners>flitbit.org</owners>
+    <licenseUrl>http://fboid.codeplex.com/license</licenseUrl>
+    <projectUrl>http://fboid.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Updated dependencies; AutoImplementedAttribute from Core instead of Emit.</releaseNotes>
+    <copyright>Copyright 2013</copyright>
+  </metadata>
+</package>

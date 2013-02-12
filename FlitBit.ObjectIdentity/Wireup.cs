@@ -2,7 +2,6 @@
 using FlitBit.Wireup;
 using FlitBit.Wireup.Meta;
 
-[assembly: WireupDependency(typeof(FlitBit.Emit.WireupThisAssembly))]
 [assembly: Wireup(typeof(FlitBit.ObjectIdentity.WireupThisAssembly))]
 
 namespace FlitBit.ObjectIdentity

@@ -35,31 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FlitBit.Copy">
-      <HintPath>..\..\packages\FlitBit.Copy.2.6.1.26735\lib\net40\FlitBit.Copy.dll</HintPath>
+    <Reference Include="FlitBit.Core">
+      <HintPath>..\..\packages\FlitBit.Core.2.5.1\lib\net40\FlitBit.Core.dll</HintPath>
     </Reference>
-    <Reference Include="FlitBit.Core, Version=2.4.9.46943, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FlitBit.Core.2.4.9.46943\lib\net40\FlitBit.Core.dll</HintPath>
+    <Reference Include="FlitBit.Dto">
+      <HintPath>..\..\packages\FlitBit.Dto.2.1.0\lib\net40\FlitBit.Dto.dll</HintPath>
     </Reference>
-    <Reference Include="FlitBit.Dto, Version=2.1.2.26875, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FlitBit.Dto.2.1.2.26875\lib\net40\FlitBit.Dto.dll</HintPath>
+    <Reference Include="FlitBit.Emit">
+      <HintPath>..\..\packages\FlitBit.Emit.2.7.0\lib\net40\FlitBit.Emit.dll</HintPath>
     </Reference>
-    <Reference Include="FlitBit.Emit, Version=2.6.1.26575, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FlitBit.Emit.2.6.1.26575\lib\net40\FlitBit.Emit.dll</HintPath>
-    </Reference>
-    <Reference Include="FlitBit.IoC, Version=2.5.0.23336, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FlitBit.IoC.2.5.0.23336\lib\net40\FlitBit.IoC.dll</HintPath>
-    </Reference>
-    <Reference Include="FlitBit.Validation">
-      <HintPath>..\..\packages\FlitBit.Validation.0.7.2.55079\lib\net40\FlitBit.Validation.dll</HintPath>
-    </Reference>
-    <Reference Include="FlitBit.Wireup, Version=2.5.0.25837, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FlitBit.Wireup.2.5.0.25837\lib\net40\FlitBit.Wireup.dll</HintPath>
+    <Reference Include="FlitBit.Wireup">
+      <HintPath>..\..\packages\FlitBit.Wireup.2.5.1\lib\net40\FlitBit.Wireup.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json">
