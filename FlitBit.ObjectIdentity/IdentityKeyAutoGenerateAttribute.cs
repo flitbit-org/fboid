@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Reflection;
 using FlitBit.Core.Factory;
+using FlitBit.Core.Meta;
 using FlitBit.Emit;
-using FlitBit.Meta;
 
 namespace FlitBit.ObjectIdentity
 {
