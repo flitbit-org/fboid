@@ -1,46 +1,49 @@
 ﻿using System;
-using System.Linq;
-using System.Reflection;
 using FlitBit.Core.Factory;
 using FlitBit.Core.Meta;
-using FlitBit.Emit;
 
 namespace FlitBit.ObjectIdentity
 {
 	/// <summary>
-	/// Framework: Binds the abstract IdentityKey&lt;T> to the emitter that constructs implementations.
-	/// You won't need to use this class.
+	///   Framework: Binds the abstract IdentityKey&lt;T> to the emitter that constructs implementations.
+	///   You won't need to use this class.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Class)]
 	public class IdentityKeyAutoGenerateAttribute : AutoImplementedAttribute
 	{
 		/// <summary>
-		/// Creates a new instance.
+		///   Creates a new instance.
 		/// </summary>
 		public IdentityKeyAutoGenerateAttribute()
-			: base()
 		{
-			this.RecommemdedScope = Core.Meta.InstanceScopeKind.ContainerScope;
+			this.RecommemdedScope = InstanceScopeKind.ContainerScope;
 		}
 
 		/// <summary>
-		/// Implements the stereotypical IdentityKey behavior for interfaces of type T.
+		///   Gets the implementation for type
 		/// </summary>
-		/// <typeparam name="T">interface type T</typeparam>
-		/// <param name="factory">the requesting factory</param>
-		/// <param name="complete">completion callback.</param>
-		/// <returns>true if the type was registered with the container, otherwise <em>false</em></returns>
-		public override bool GetImplementation<T>(IFactory factory, Action<Type, Func<T>> complete)
+		/// <param name="factory">the factory from which the type was requested.</param>
+		/// <param name="type">the target types</param>
+		/// <param name="complete">callback invoked when the implementation is available</param>
+		/// <returns>
+		///   <em>true</em> if implemented; otherwise <em>false</em>.
+		/// </returns>
+		/// <exception cref="T:System.ArgumentException">
+		///   thrown if <paramref name="type" /> is not eligible for implementation
+		/// </exception>
+		/// <remarks>
+		///   If the <paramref name="complete" /> callback is invoked, it must be given either an implementation type
+		///   assignable to type T, or a factory function that creates implementations of type T.
+		/// </remarks>
+		public override bool GetImplementation(IFactory factory, Type type, Action<Type, Func<object>> complete)
 		{
-			if (typeof(T).GetGenericTypeDefinition() == typeof(IdentityKey<>))
+			if (type.GetGenericTypeDefinition() == typeof(IdentityKey<>))
 			{
-				var args = typeof(T).GetGenericArguments();
-				var keyProp = args[0].GetReadablePropertiesFromHierarchy(BindingFlags.Public)
-					.FirstOrDefault(p => p.IsDefined(typeof(IdentityKeyAttribute), true)
-					);
+				var args = type.GetGenericArguments();
 
 				var typeGenerator = IdentityKeyEmitter.TypeEmitter;
-				var emittedType = (Type)typeGenerator.MakeGenericMethod(args[0]).Invoke(null, Type.EmptyTypes);
+				var emittedType = (Type) typeGenerator.MakeGenericMethod(args[0])
+																							.Invoke(null, new object[0]);
 				complete(emittedType, null);
 				return true;
 			}

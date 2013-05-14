@@ -11,10 +11,21 @@ namespace FlitBit.ObjectIdentity.Tests
 	[TestClass]
 	public class IdentityKeyTests
 	{
+		public TestContext TestContext { get; set; }
+
 		[TestInitialize]
 		public void Init()
 		{
+			RuntimeAssemblies.WriteDynamicAssemblyOnExit = true;
 			WireupCoordinator.SelfConfigure();
+		}
+
+		[TestCleanup]
+		public void Cleanup()
+		{
+			var report = WireupCoordinator.Instance.ReportWireupHistory();
+			TestContext.WriteLine("---------- Wireup Report ----------");
+			TestContext.WriteLine(report);
 		}
 
 		[TestMethod]
@@ -74,7 +85,7 @@ namespace FlitBit.ObjectIdentity.Tests
 
 			var rand = new Random();
 			var factory = FactoryProvider.Factory;
-			var ik = factory.CreateInstance<IdentityKey<IDerived, string>>();
+			var ik = factory.CreateInstance<IdentityKey<IDerived>>();
 
 			Assert.IsTrue(ik.HasKey);
 			Assert.AreEqual(typeof(String), ik.KeyType);
@@ -89,7 +100,7 @@ namespace FlitBit.ObjectIdentity.Tests
 				my.Name = name;
 				my.Tag = Convert.ToString(r);
 				my.Description = String.Concat("Derived: ", name);
-				Assert.AreEqual(Convert.ToString(r), ik.Key(my));
+				Assert.AreEqual(Convert.ToString(r), ik.UntypedKey(my));
 			}
 		}
 
@@ -100,7 +111,6 @@ namespace FlitBit.ObjectIdentity.Tests
 			// Ensure the dynamic assembly gets dumped to disk so we can inspect it...
 			RuntimeAssemblies.WriteDynamicAssemblyOnExit = true;
 
-			var rand = new Random();
 			var factory = FactoryProvider.Factory;
 			var ik = factory.CreateInstance<IdentityKey<NoKey>>();
 						
@@ -109,7 +119,7 @@ namespace FlitBit.ObjectIdentity.Tests
 			Assert.IsNull(ik.KeyName);
 
 			var nk = new NoKey();
-			var k = ik.UntypedKey(nk);
+			Assert.IsNull(ik.UntypedKey(nk), "Causes the exception to be raised.");
 		}
 	}
 }

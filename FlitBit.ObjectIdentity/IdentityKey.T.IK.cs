@@ -1,31 +1,64 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using FlitBit.Core;
+using FlitBit.ObjectIdentity.CodeContracts;
 
 namespace FlitBit.ObjectIdentity
 {
 	/// <summary>
-	/// Utility class for working with a type's identity.
+	///   Utility class for working with a type's identity.
 	/// </summary>
 	/// <typeparam name="T">target type T</typeparam>
-	/// <typeparam name="IK">identity key type IK</typeparam>
-	[IdentityKeyAutoGenerate2]
-	[ContractClass(typeof(CodeContracts.ContractForIdentityKey<,>))]
-	public abstract class IdentityKey<T, IK> : IdentityKey<T>, IEquatable<IdentityKey<T, IK>>
+	/// <typeparam name="TIdentityKey">identity key type IK</typeparam>
+	[IdentityKeyAutoGenerate2, ContractClass(typeof(ContractForIdentityKey<,>))]
+	public abstract class IdentityKey<T, TIdentityKey> : IdentityKey<T>, IEquatable<IdentityKey<T, TIdentityKey>>
 	{
-		static readonly int CHashCodeSeed = typeof(IdentityKey<T, IK>).AssemblyQualifiedName.GetHashCode();
+// ReSharper disable StaticFieldInGenericType
+		static readonly int CHashCodeSeed = typeof(IdentityKey<T, TIdentityKey>).AssemblyQualifiedName.GetHashCode();
+// ReSharper restore StaticFieldInGenericType
 
 		/// <summary>
-		/// Creates an instance.
+		///   Creates an instance.
 		/// </summary>
 		/// <param name="name">the key's name.</param>
 		protected IdentityKey(string name)
-			: base(typeof(IK), name)
-		{
-		}
-		
+			: base(typeof(TIdentityKey), name)
+		{}
+
 		/// <summary>
-		/// Gets an instance's identity key.
+		///   Gets an instance's identity key.
+		/// </summary>
+		/// <param name="instance">and instance of T</param>
+		/// <returns>the instance's identity key.</returns>
+		public abstract TIdentityKey Key(T instance);
+
+		/// <summary>
+		///   Compares this object to another for equality.
+		/// </summary>
+		/// <param name="obj">the other object</param>
+		/// <returns>
+		///   <em>true</em> if equal; otherwise <em>false</em>.
+		/// </returns>
+		public override bool Equals(object obj)
+		{
+			return obj is IdentityKey<T, TIdentityKey>
+				&& Equals((IdentityKey<T, TIdentityKey>) obj);
+		}
+
+		/// <summary>
+		///   Generates a hashcode identifying the instance.
+		/// </summary>
+		/// <returns>a hashcode</returns>
+		public override int GetHashCode()
+		{
+			const int prime = Constants.NotSoRandomPrime;
+			var res = CHashCodeSeed * prime;
+			res ^= base.GetHashCode() * prime;
+			return res;
+		}
+
+		/// <summary>
+		///   Gets an instance's identity key.
 		/// </summary>
 		/// <param name="instance">and instance of T</param>
 		/// <returns>the instance's identity key (as an untyped object).</returns>
@@ -34,30 +67,16 @@ namespace FlitBit.ObjectIdentity
 			return Key(instance);
 		}
 
-		/// <summary>
-		/// Gets an instance's identity key.
-		/// </summary>
-		/// <param name="instance">and instance of T</param>
-		/// <returns>the instance's identity key.</returns>
-		public abstract IK Key(T instance);
+		#region IEquatable<IdentityKey<T,IK>> Members
 
 		/// <summary>
-		/// Compares this object to another for equality.
-		/// </summary>
-		/// <param name="obj">the other object</param>
-		/// <returns><em>true</em> if equal; otherwise <em>false</em>.</returns>
-		public override bool Equals(object obj)
-		{
-			return obj is IdentityKey<T, IK>
-				&& Equals((IdentityKey<T, IK>)obj);
-		}
-
-		/// <summary>
-		/// Compares this object to another for equality.
+		///   Compares this object to another for equality.
 		/// </summary>
 		/// <param name="other">the other object</param>
-		/// <returns><em>true</em> if equal; otherwise <em>false</em>.</returns>
-		public bool Equals(IdentityKey<T, IK> other)
+		/// <returns>
+		///   <em>true</em> if equal; otherwise <em>false</em>.
+		/// </returns>
+		public bool Equals(IdentityKey<T, TIdentityKey> other)
 		{
 			// We already know T and IK are equal,
 			// so if it refers to the same property then we're equal.
@@ -65,35 +84,27 @@ namespace FlitBit.ObjectIdentity
 				&& String.Equals(this.KeyName, other.KeyName);
 		}
 
-		/// <summary>
-		/// Generates a hashcode identifying the instance.
-		/// </summary>
-		/// <returns>a hashcode</returns>
-		public override int GetHashCode()
-		{
-			var prime = Constants.NotSoRandomPrime;
-			var res = CHashCodeSeed * prime;
-			res ^= base.GetHashCode() * prime;
-			return res;
-		}
+		#endregion
 	}
 
 	namespace CodeContracts
 	{
 		/// <summary>
-		/// CodeContracts Class for IModel
+		///   CodeContracts Class for IModel
 		/// </summary>
 		[ContractClassFor(typeof(IdentityKey<,>))]
-		public abstract class ContractForIdentityKey<T, IK> : IdentityKey<T, IK>
+		public abstract class ContractForIdentityKey<T, TIdentityKey> : IdentityKey<T, TIdentityKey>
 		{
-			private ContractForIdentityKey() : base("") { }
+			ContractForIdentityKey()
+				: base("")
+			{}
 
 			/// <summary>
-			/// Gets an instance's identity key.
+			///   Gets an instance's identity key.
 			/// </summary>
 			/// <param name="instance">and instance of T</param>
 			/// <returns>the instance's identity key.</returns>
-			public override IK Key(T instance)
+			public override TIdentityKey Key(T instance)
 			{
 				Contract.Requires<ArgumentNullException>(instance != null);
 
