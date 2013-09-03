@@ -10,7 +10,7 @@
     <projectUrl>http://fboid.codeplex.com/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Updated dependencies; AutoImplementedAttribute from Core instead of Emit.</releaseNotes>
+    <releaseNotes>Leveled up to newest NuGets.</releaseNotes>
     <copyright>Copyright 2013</copyright>
   </metadata>
 </package>
