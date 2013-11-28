@@ -6,11 +6,11 @@
     <title>$title$</title>
     <authors>Phillip Clark</authors>
     <owners>flitbit.org</owners>
-    <licenseUrl>http://fboid.codeplex.com/license</licenseUrl>
-    <projectUrl>http://fboid.codeplex.com/</projectUrl>
+    <licenseUrl>https://raw.github.com/flitbit-org/fboid/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/flitbit-org/fboid</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Updated dependencies; AutoImplementedAttribute from Core instead of Emit.</releaseNotes>
+    <releaseNotes>Moved repository to github.</releaseNotes>
     <copyright>Copyright 2013</copyright>
   </metadata>
 </package>
