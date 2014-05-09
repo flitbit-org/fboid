@@ -147,7 +147,9 @@ Once your objects declare thier identifying property, you can build utility clas
   }
 ```
 
-Constructing this class requires an instance of the appropriate `IdentityKey<TTarget>` helper which is dynamically emitted. If you also use [FlitBit.IoC](https://github.com/flitbit-org/fbioc) then everything will just work. If not you'll have to either construct the dynamically emitted implementation yourself or wire it into your IoC provider. You can always fall back to [FlitBit.Core's](https://github.com/flitbit-org/fbcore) basic `FactoryProvider` which will ensure the implementation gets emitted.
+Constructing this class requires an instance of the appropriate `IdentityKey<TTarget>` helper which is dynamically emitted. If you also use [FlitBit.IoC](https://github.com/flitbit-org/fbioc) then everything will just work when you `Create.New<IdentifiableCache<ILanguage>>()`. 
+
+If you use another IoC then you'll have to construct the dynamically emitted implementation and register it with your container. You can also fall back to [FlitBit.Core's](https://github.com/flitbit-org/fbcore) basic `FactoryProvider` which will ensure the implementation gets emitted.
 
 ```c#
 using FlitBit.Core;
@@ -156,12 +158,17 @@ using FlitBit.Core;
 
 var factory = FactoryProvider.Factory;
 
-// when you've got the factory you can get the dynamically generated type:
+// When you've got a factory you can get the dynamically generated type.
+// Just register it with your IoC container of choice.
 
 var ikType = factory.GetImplementationType<IdentityKey<ILanguage>>();
 
-// or just create one using the factory...
+// or create one using the factory...
 
 var ik = factory.CreateInstance<IdentityKey<ILanguage>>();
 
+```
+
+```
+// TODO: Lots more documentation
 ```
