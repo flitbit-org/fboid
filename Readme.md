@@ -12,7 +12,7 @@ But it goes further than simply identifying the property. It produces run-time i
 
 Over time we noticed that we had produced more than one pattern for working with object identities in an abstract way. Each of these prior implementations relied on an interface something like:
 
-```c#
+```csharp
 public interface IIdentifiable<TKey>
 {
   TKey ID { get; }
@@ -25,7 +25,7 @@ This implementation worked just fine but as you can see, it requires that the id
 
 These interface declarations are a possible contract for the language subtags in the IANA language subtag registry. 
 
-```c#
+```csharp
 public interface ILanguage
 {
   [IdentityKey]
